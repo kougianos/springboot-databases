@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping(path = "mysql")
 public class MysqlController {
@@ -31,6 +33,16 @@ public class MysqlController {
 
     }
 
+    @PostMapping(path = "/addObject")
+    public @ResponseBody
+    String addNewUserObject
+            (@RequestBody User user) {
+
+        Integer id = userRepository.save(user).getId();
+        return "Successfully inserted user with id " + id;
+
+    }
+
     @GetMapping(path = "/all")
     public @ResponseBody
     Iterable<User> getAllUsers() {
@@ -47,5 +59,36 @@ public class MysqlController {
             return "User with id " + id + " not found";
         }
         return "Successfully deleted user with id " + id;
+    }
+
+    @PutMapping(path = "/update")
+    public @ResponseBody
+    String updateUserById(@RequestParam Integer id,
+                          @RequestParam(required = false) String username,
+                          @RequestParam(required = false) String password,
+                          @RequestParam(required = false) String email) {
+
+        Optional<User> n = userRepository.findById(id);
+
+        if (n.isPresent()) {
+
+            if (username != null) {
+                n.get().setUsername(username);
+            }
+
+            if (password != null) {
+                n.get().setPassword(password);
+            }
+
+            if (email != null) {
+                n.get().setEmail(email);
+            }
+
+            userRepository.save(n.get());
+
+        }
+
+        return "Successfully updated user with id " + id;
+
     }
 }
