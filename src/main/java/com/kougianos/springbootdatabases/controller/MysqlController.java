@@ -86,6 +86,8 @@ public class MysqlController {
 
             userRepository.save(n.get());
 
+        } else {
+            return "User with id " + id + " not found";
         }
 
         return "Successfully updated user with id " + id;
