@@ -49,6 +49,14 @@ public class MysqlController {
         return userRepository.findAll();
     }
 
+    @GetMapping(path = "/find")
+    public @ResponseBody
+    Iterable<User> findByUsername(@RequestParam String username) {
+
+        return userRepository.findByUsernameContaining(username);
+
+    }
+
     @DeleteMapping(path = "/delete")
     public @ResponseBody
     String deleteUserById(@RequestParam Integer id) {
