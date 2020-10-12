@@ -3,6 +3,7 @@ package com.kougianos.springbootdatabases.controller;
 import com.kougianos.springbootdatabases.dto.User;
 import com.kougianos.springbootdatabases.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,13 @@ public class MysqlController {
     String addNewUserObject
             (@RequestBody User user) {
 
-        Integer id = userRepository.save(user).getId();
-        return "Successfully inserted user with id " + id;
+        try {
+            Integer id = userRepository.save(user).getId();
+            return "Successfully inserted user with id " + id;
+        } catch (DataIntegrityViolationException e) {
+            return "Failed to insert user, duplicate key " + user.getId();
+        }
+
 
     }
 
