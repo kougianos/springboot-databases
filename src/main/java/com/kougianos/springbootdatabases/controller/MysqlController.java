@@ -75,6 +75,16 @@ public class MysqlController {
         return "Successfully deleted user with id " + id;
     }
 
+    @DeleteMapping(path = "/deleteAll")
+    public @ResponseBody
+    String deleteUserById() {
+
+        userRepository.deleteAll();
+        userRepository.resetIdCounter();
+        return "Successfully deleted all users and reset id counter";
+
+    }
+
     @PutMapping(path = "/update")
     public @ResponseBody
     String updateUserById(@RequestParam Integer id,
