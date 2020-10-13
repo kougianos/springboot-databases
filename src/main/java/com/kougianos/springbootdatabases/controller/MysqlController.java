@@ -77,7 +77,7 @@ public class MysqlController {
 
     @DeleteMapping(path = "/deleteAll")
     public @ResponseBody
-    String deleteUserById() {
+    String deleteAllUsers() {
 
         userRepository.deleteAll();
         userRepository.resetIdCounter();
