@@ -1,5 +1,5 @@
 # springboot-databases
-Spring boot microservice that exposes a rest API and connects to MySQL localhost Database.
+Spring boot microservice that exposes a rest API and connects to MySQL localhost Database. <br>
 
 <b>DB connection details</b>
 ```
@@ -10,3 +10,19 @@ username: test
 password: test
 table: user
 ```
+
+The project uses springdoc-openapi-ui maven dependency for REST API documentation. <br>
+You can find the openAPI specification at http://localhost:8080/v3/api-docs, after you run the application. <br>
+You can also find an interactive Swagger UI page at http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
+
+<b>Prerequisites for running locally</b> <br>
+* JDK 11
+* Maven
+* MySQL
+
+<b>Run the application</b> <br>
+
+`git clone https://github.com/kougianos/springboot-databases.git`\
+`cd springboot-databases`\
+`mvn package`\
+`java -jar target/springboot-databases-0.0.1-SNAPSHOT.jar`
