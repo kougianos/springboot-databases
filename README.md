@@ -22,7 +22,28 @@ You can also find an interactive Swagger UI page at http://localhost:8080/swagge
 
 <b>Run the application</b> <br>
 
-`git clone https://github.com/kougianos/springboot-databases.git`\
-`cd springboot-databases`\
-`mvn package`\
-`java -jar target/springboot-databases-0.0.1-SNAPSHOT.jar`
+```bash
+git clone https://github.com/kougianos/springboot-databases.git
+cd springboot-databases
+mvn package
+java -jar target/springboot-databases-0.0.1-SNAPSHOT.jar
+```
+
+The application uses a simple User DTO for data persisting: <br>
+```java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class User {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Integer id;
+
+    private String username;
+    private String password;
+    private String email;
+}
+```
