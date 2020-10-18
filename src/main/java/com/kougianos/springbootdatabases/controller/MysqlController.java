@@ -5,12 +5,13 @@ import com.kougianos.springbootdatabases.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@Controller
+@CrossOrigin
+@RestController
 @RequestMapping(path = "mysql")
 public class MysqlController {
 
@@ -18,6 +19,7 @@ public class MysqlController {
     private UserRepository userRepository;
 
     @PostMapping(path = "/add")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody
     String addNewUser
             (@RequestParam String username,
@@ -35,6 +37,7 @@ public class MysqlController {
     }
 
     @PostMapping(path = "/addObject")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody
     String addNewUserObject
             (@RequestBody User user) {
@@ -50,12 +53,14 @@ public class MysqlController {
     }
 
     @GetMapping(path = "/all")
+    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
     Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @GetMapping(path = "/find")
+    @GetMapping(path = "/findByUsername")
+    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
     Iterable<User> findByUsername(@RequestParam String username) {
 
@@ -64,6 +69,7 @@ public class MysqlController {
     }
 
     @DeleteMapping(path = "/delete")
+    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
     String deleteUserById(@RequestParam Integer id) {
 
@@ -76,6 +82,7 @@ public class MysqlController {
     }
 
     @DeleteMapping(path = "/deleteAll")
+    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
     String deleteAllUsers() {
 
@@ -86,6 +93,7 @@ public class MysqlController {
     }
 
     @PutMapping(path = "/update")
+    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
     String updateUserById(@RequestParam Integer id,
                           @RequestParam(required = false) String username,
