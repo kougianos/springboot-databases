@@ -1,5 +1,5 @@
 # springboot-databases
-Spring boot microservice that exposes a simple REST CRUD API and connects to MySQL localhost Database for data persistence <br>
+Spring boot microservice that exposes a simple REST CRUD API and connects to MySQL localhost Database for data persistence. <br>
 
 <b>DB connection details</b>
 ```
