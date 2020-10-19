@@ -1,5 +1,5 @@
 # springboot-databases
-Spring boot microservice that exposes a rest API and connects to MySQL localhost Database. <br>
+Spring boot microservice that exposes a simple REST CRUD API and connects to MySQL localhost Database for data persistence. <br>
 
 <b>DB connection details</b>
 ```
@@ -29,7 +29,7 @@ mvn package
 java -jar target/springboot-databases-0.0.1-SNAPSHOT.jar
 ```
 
-The application uses a simple User DTO for data persisting: <br>
+The application uses a simple User DTO for data persistence: <br>
 ```java
 @Entity
 @Getter
