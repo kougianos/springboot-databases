@@ -39,6 +39,9 @@ public class OTP {
     @JsonProperty("channel")
     private Reference channel = null;
 
+    @JsonProperty("validation")
+    private String validation = null;
+
     @JsonProperty("characteristics")
     @Valid
     private List<Characteristic> characteristics = null;
