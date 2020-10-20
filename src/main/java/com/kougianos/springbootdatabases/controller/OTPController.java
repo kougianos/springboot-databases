@@ -38,6 +38,7 @@ public class OTPController {
         OTP generatedOtp = otpService.validatePin(otp.getOtp(), otp.getNonce());
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
+        otp.setValidation(generatedOtp.getValidation());
         return otp;
     }
 

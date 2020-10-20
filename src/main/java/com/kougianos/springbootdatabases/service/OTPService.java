@@ -48,7 +48,13 @@ public class OTPService {
         // Generate new pin based on input key and NOW timestamp
         int newPin = totp.generateOneTimePassword(key, Instant.now());
 
-        return new OTP(String.valueOf(newPin), Base64.getEncoder().encodeToString(key.getEncoded()));
+        OTP otpToReturn = new OTP();
+
+        otpToReturn.setValidation(String.valueOf(newPin).equals(pin) ? "SUCCESS" : "FAILED");
+        otpToReturn.setOtp(String.valueOf(newPin));
+        otpToReturn.setNonce(Base64.getEncoder().encodeToString(key.getEncoded()));
+
+        return otpToReturn;
     }
 
 }
