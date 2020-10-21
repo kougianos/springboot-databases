@@ -1,5 +1,6 @@
 package com.kougianos.springbootdatabases.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kougianos.springbootdatabases.dto.OTP;
 import com.kougianos.springbootdatabases.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,13 @@ public class OTPController {
     @Autowired
     private OTPService otpService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @PostMapping(path = "/generate")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public @ResponseBody
-    OTP generatePin(
-            @RequestBody OTP otp
-    ) throws InvalidKeyException, NoSuchAlgorithmException {
+    public @ResponseBody OTP generatePin(@RequestBody OTP otp)
+            throws InvalidKeyException, NoSuchAlgorithmException {
         OTP generatedOtp = otpService.generatePin();
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
@@ -31,10 +33,8 @@ public class OTPController {
 
     @PutMapping(path = "/validate")
     @ResponseStatus(value = HttpStatus.OK)
-    public @ResponseBody
-    OTP validatePin(
-            @RequestBody OTP otp
-    ) throws InvalidKeyException {
+    public @ResponseBody OTP validatePin(@RequestBody OTP otp)
+            throws InvalidKeyException {
         OTP generatedOtp = otpService.validatePin(otp.getOtp(), otp.getNonce());
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
