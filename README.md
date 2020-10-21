@@ -47,3 +47,13 @@ public class User {
     private String email;
 }
 ```
+<b>One Time Pin implementation</b> <br>
+Using the below maven dependency (link: https://github.com/jchambers/java-otp)
+```xml
+<dependency>
+  <groupId>com.eatthepath</groupId>
+  <artifactId>java-otp</artifactId>
+  <version>0.2.0</version>
+</dependency>
+```
+the service offers an easy-to-use One Time Pin generation and validation, exposing 2 HTTP request methods to clients/consumers.
