@@ -36,7 +36,7 @@ public class OTPService {
         // Generate pin based on key and NOW timestamp
         int pin = totp.generateOneTimePassword(key, Instant.now());
 
-        return new OTP(String.valueOf(pin), Base64.getEncoder().encodeToString(key.getEncoded()));
+        return new OTP(String.format("%06d", pin), Base64.getEncoder().encodeToString(key.getEncoded()));
     }
 
     public OTP validatePin(String pin, String nonce) throws InvalidKeyException {
@@ -50,7 +50,7 @@ public class OTPService {
 
         OTP otpToReturn = new OTP();
 
-        otpToReturn.setValidation(String.valueOf(newPin).equals(pin) ? "SUCCESS" : "FAILED");
+        otpToReturn.setValidation(String.format("%06d", newPin).equals(pin) ? "SUCCESS" : "FAILED");
         otpToReturn.setOtp(String.valueOf(newPin));
         otpToReturn.setNonce(Base64.getEncoder().encodeToString(key.getEncoded()));
 
