@@ -2,7 +2,7 @@ package com.kougianos.springbootdatabases.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kougianos.springbootdatabases.dto.OTP;
-import com.kougianos.springbootdatabases.service.OTPService;
+import com.kougianos.springbootdatabases.service.OTPServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 public class OTPController {
 
     @Autowired
-    private OTPService otpService;
+    private OTPServiceImpl otpServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -25,7 +25,7 @@ public class OTPController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody OTP generatePin(@RequestBody OTP otp)
             throws InvalidKeyException, NoSuchAlgorithmException {
-        OTP generatedOtp = otpService.generatePin();
+        OTP generatedOtp = otpServiceImpl.generatePin();
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
         return otp;
@@ -35,7 +35,7 @@ public class OTPController {
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody OTP validatePin(@RequestBody OTP otp)
             throws InvalidKeyException {
-        OTP generatedOtp = otpService.validatePin(otp.getOtp(), otp.getNonce());
+        OTP generatedOtp = otpServiceImpl.validatePin(otp.getOtp(), otp.getNonce());
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
         otp.setValidation(generatedOtp.getValidation());
