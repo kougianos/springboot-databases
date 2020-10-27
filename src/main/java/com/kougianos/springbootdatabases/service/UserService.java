@@ -2,8 +2,6 @@ package com.kougianos.springbootdatabases.service;
 
 import com.kougianos.springbootdatabases.dto.User;
 
-import java.util.List;
-
 public interface UserService {
 
     /**
@@ -19,7 +17,7 @@ public interface UserService {
      *
      * @return List of all users
      */
-    List<User> getAllUsers();
+    Iterable<User> getAllUsers();
 
     /**
      * Get user with specific id

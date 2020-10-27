@@ -2,10 +2,11 @@ package com.kougianos.springbootdatabases.controller;
 
 import com.kougianos.springbootdatabases.dto.User;
 import com.kougianos.springbootdatabases.repository.UserRepository;
+import com.kougianos.springbootdatabases.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,46 +18,28 @@ public class MysqlController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserServiceImpl userService;
 
     @PostMapping(path = "/add")
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody
-    String addNewUser
-            (@RequestParam String username,
-             @RequestParam String password,
-             @RequestParam String email) {
-
-        User n = new User();
-        n.setUsername(username);
-        n.setPassword(password);
-        n.setEmail(email);
-
-        Integer id = userRepository.save(n).getId();
-        return "Successfully inserted user with id " + id;
-
-    }
-
-    @PostMapping(path = "/addObject")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public @ResponseBody
-    String addNewUserObject
-            (@RequestBody User user) {
+    ResponseEntity<String> createUser(@RequestBody User user) {
 
         try {
-            Integer id = userRepository.save(user).getId();
-            return "Successfully inserted user with id " + id;
-        } catch (DataIntegrityViolationException e) {
-            return "Failed to insert user, duplicate key " + user.getId();
+            Integer id = userService.createUser(user);
+            return new ResponseEntity<>("Successfully inserted user with id " + id, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to insert user: " + e.getMessage(), HttpStatus.CONFLICT);
         }
-
 
     }
 
     @GetMapping(path = "/all")
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+    ResponseEntity<Iterable<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/findByUsername")

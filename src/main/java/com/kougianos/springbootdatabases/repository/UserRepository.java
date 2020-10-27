@@ -11,7 +11,8 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     List<User> findByUsernameContaining(String username);
-    User findByEmail(String email);
+
+    List<User> findByEmail(String email);
 
     @Modifying
     @Transactional
