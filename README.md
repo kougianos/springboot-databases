@@ -47,7 +47,17 @@ public class User {
     private String email;
 }
 ```
-To perform operations on the database using the API you can use Postman or another tool of your preference
+To perform operations on the database using the API you can use Postman or another tool of your preference. <br>
+Sample request for creating a user: <br> 
+POST http://localhost:8080/mysql/add <br>
+Body (raw): <br>
+```json
+{
+    "username": "test",
+    "password": "pass",
+    "email": "test@mail.com"
+}
+```
 
 
 #### One Time Pin implementation <br>
