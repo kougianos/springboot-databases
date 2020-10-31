@@ -42,13 +42,18 @@ public class MysqlController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/findById")
+    @ResponseStatus(value = HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<Optional<User>> findById(@RequestParam Integer id) {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
     @GetMapping(path = "/findByUsername")
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    Iterable<User> findByUsername(@RequestParam String username) {
-
-        return userRepository.findByUsernameContaining(username);
-
+    ResponseEntity<Iterable<User>> findByUsername(@RequestParam String username) {
+        return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete")
