@@ -24,12 +24,20 @@ public interface UserService {
      *
      * @return User
      */
-    User getUser(Integer id);
+    User getUserById(Integer id);
+
+    /**
+     * Get user by username
+     *
+     * @return User
+     */
+    User getUserByUsername(Integer id);
+
 
     /**
      * Update an existing user
      *
-     * @param id id of user to be updated
+     * @param id   id of user to be updated
      * @param user user to create
      * @return Integer id of user updated
      */
