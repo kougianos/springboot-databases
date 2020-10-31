@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,8 +43,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(Integer id) {
-        return null;
+    public Optional<User> getUserById(Integer id) {
+        return userRepository.findById(id);
+    }
+
+    public List<User> getUserByUsername(String username) {
+        return userRepository.findByUsernameContaining(username);
     }
 
     public Integer updateUser(Integer id, User user) {
