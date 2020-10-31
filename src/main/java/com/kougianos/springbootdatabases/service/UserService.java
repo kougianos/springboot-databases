@@ -2,6 +2,9 @@ package com.kougianos.springbootdatabases.service;
 
 import com.kougianos.springbootdatabases.dto.User;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface UserService {
 
     /**
@@ -24,15 +27,14 @@ public interface UserService {
      *
      * @return User
      */
-    User getUserById(Integer id);
+    Optional<User> getUserById(Integer id);
 
     /**
      * Get user by username
      *
      * @return User
      */
-    User getUserByUsername(Integer id);
-
+    List<User> getUserByUsername(String username);
 
     /**
      * Update an existing user
