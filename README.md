@@ -70,3 +70,23 @@ Using the below maven dependency (link: https://github.com/jchambers/java-otp)
 </dependency>
 ```
 the service offers an easy-to-use One Time Pin generation and validation, exposing 2 HTTP request methods to clients/consumers.
+
+#### Sample request for OTP generation: <br>
+```json
+{
+  "context": "context",
+  "serviceId": "6999999999",
+  "serviceType": "phonenumber",
+  "channel": {
+    "id": "channelId",
+    "href": "https://channel.com",
+    "name": "channelName"
+  },
+  "characteristics": [
+    {
+      "name": "OtpDuration",
+      "value": "120"
+    }
+  ]
+}
+```
