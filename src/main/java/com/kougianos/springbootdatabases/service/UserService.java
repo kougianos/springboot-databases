@@ -58,5 +58,5 @@ public interface UserService {
      *
      * @return boolean true if operation was successful, false otherwise
      */
-    boolean deleteAllUsers();
+    void deleteAllUsers();
 }

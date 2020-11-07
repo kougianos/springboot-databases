@@ -4,10 +4,19 @@ import com.kougianos.springbootdatabases.dto.User;
 import com.kougianos.springbootdatabases.repository.UserRepository;
 import com.kougianos.springbootdatabases.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -59,58 +68,36 @@ public class MysqlController {
     @DeleteMapping(path = "/delete")
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    String deleteUserById(@RequestParam Integer id) {
+    ResponseEntity<String> deleteUserById(@RequestParam Integer id) {
 
-        try {
-            userRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            return "User with id " + id + " not found";
+        if (userService.deleteUser(id) > 0) {
+            return new ResponseEntity<>("Successfully delete user with id " + id, HttpStatus.OK);
         }
-        return "Successfully deleted user with id " + id;
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+
     }
 
     @DeleteMapping(path = "/deleteAll")
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    String deleteAllUsers() {
+    ResponseEntity<String> deleteAllUsers() {
 
-        userRepository.deleteAll();
-        userRepository.resetIdCounter();
-        return "Successfully deleted all users and reset id counter";
+        userService.deleteAllUsers();
+        return new ResponseEntity<>("Successfully deleted all users and reset id counter", HttpStatus.OK);
 
     }
 
     @PutMapping(path = "/update")
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    String updateUserById(@RequestParam Integer id,
-                          @RequestParam(required = false) String username,
-                          @RequestParam(required = false) String password,
-                          @RequestParam(required = false) String email) {
+    ResponseEntity<String> updateUserById(@RequestParam Integer id,
+                                          @RequestParam() User user) {
 
-        Optional<User> n = userRepository.findById(id);
-
-        if (n.isPresent()) {
-
-            if (username != null) {
-                n.get().setUsername(username);
-            }
-
-            if (password != null) {
-                n.get().setPassword(password);
-            }
-
-            if (email != null) {
-                n.get().setEmail(email);
-            }
-
-            userRepository.save(n.get());
-
-        } else {
-            return "User with id " + id + " not found";
+        if (userService.updateUser(id, user) > 0) {
+            return new ResponseEntity<>("Successfully updated user with id " + id, HttpStatus.OK);
         }
 
-        return "Successfully updated user with id " + id;
+        return new ResponseEntity<>("Failed to update user with id " + id, HttpStatus.CONFLICT);
 
     }
 }

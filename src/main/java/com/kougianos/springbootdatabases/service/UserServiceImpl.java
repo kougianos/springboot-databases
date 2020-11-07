@@ -3,10 +3,9 @@ package com.kougianos.springbootdatabases.service;
 import com.kougianos.springbootdatabases.dto.User;
 import com.kougianos.springbootdatabases.exception.EmailAlreadyExistsException;
 import com.kougianos.springbootdatabases.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -51,14 +49,39 @@ public class UserServiceImpl implements UserService {
     }
 
     public Integer updateUser(Integer id, User user) {
-        return null;
+        Optional<User> n = userRepository.findById(id);
+
+        if (n.isPresent()) {
+
+            if (user.getUsername() != null) {
+                n.get().setUsername(user.getUsername());
+            }
+
+            if (user.getPassword() != null) {
+                n.get().setPassword(user.getPassword());
+            }
+
+            if (user.getEmail() != null) {
+                n.get().setEmail(user.getEmail());
+            }
+            return userRepository.save(n.get()).getId();
+
+        }
+        return 0;
+
     }
 
     public Integer deleteUser(Integer id) {
-        return null;
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
+        return id;
     }
 
-    public boolean deleteAllUsers() {
-        return false;
+    public void deleteAllUsers() {
+        userRepository.deleteAll();
+        userRepository.resetIdCounter();
     }
 }
