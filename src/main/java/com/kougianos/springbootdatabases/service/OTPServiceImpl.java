@@ -4,14 +4,14 @@ import com.eatthepath.otp.TimeBasedOneTimePasswordGenerator;
 import com.kougianos.springbootdatabases.dto.OTP;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Base64;
+import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 
 @Service
 public class OTPServiceImpl implements OTPService {
@@ -19,7 +19,7 @@ public class OTPServiceImpl implements OTPService {
     private TimeBasedOneTimePasswordGenerator totp;
     private Key key;
 
-    public OTPServiceImpl() throws NoSuchAlgorithmException {
+    public OTPServiceImpl() {
         try {
             totp = new TimeBasedOneTimePasswordGenerator(Duration.ofSeconds(5));
         } catch (NoSuchAlgorithmException e) {
