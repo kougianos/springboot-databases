@@ -28,10 +28,9 @@ public class UserServiceImpl implements UserService {
 
         List<User> u = userRepository.findByEmail(user.getEmail());
 
-        System.out.println(u);
 
         // Check email
-        if (u.size() == 0) {
+        if (u.isEmpty()) {
             return userRepository.save(user).getId();
         } else {
             throw new EmailAlreadyExistsException();
