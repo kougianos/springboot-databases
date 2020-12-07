@@ -20,9 +20,7 @@ public class OTPController {
     @PostMapping(path = "/generate")
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody
-    OTP generatePin(
-            @RequestBody OTP otp
-    ) throws InvalidKeyException, NoSuchAlgorithmException {
+    OTP generatePin(@RequestBody OTP otp) throws InvalidKeyException, NoSuchAlgorithmException {
         OTP generatedOtp = otpService.generatePin();
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
@@ -32,9 +30,7 @@ public class OTPController {
     @PutMapping(path = "/validate")
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    OTP validatePin(
-            @RequestBody OTP otp
-    ) throws InvalidKeyException {
+    OTP validatePin( @RequestBody OTP otp) throws InvalidKeyException {
         OTP generatedOtp = otpService.validatePin(otp.getOtp(), otp.getNonce());
         otp.setNonce(generatedOtp.getNonce());
         otp.setOtp(generatedOtp.getOtp());
