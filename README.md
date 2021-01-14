@@ -1,5 +1,6 @@
 # springboot-databases
 Spring boot microservice that exposes a simple REST CRUD API and connects to MySQL localhost Database for data persistence. <br>
+The microservice offers a One Time Pin Generation/Validation mechanism as well (described in detail below). <br>
 
 #### DB connection details
 ```
