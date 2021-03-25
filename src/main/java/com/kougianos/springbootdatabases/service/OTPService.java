@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -36,7 +37,7 @@ public class OTPService {
         // Generate pin based on key and NOW timestamp
         int pin = totp.generateOneTimePassword(key, Instant.now());
 
-        return new OTP(String.valueOf(pin), Base64.getEncoder().encodeToString(key.getEncoded()));
+        return new OTP(String.valueOf(pin), new String(key.getEncoded(), StandardCharsets.UTF_8)); 
     }
 
     public OTP validatePin(String pin, String nonce) throws InvalidKeyException {
